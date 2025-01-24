@@ -4,6 +4,7 @@ import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 import { AuthGuard } from './auth.guard';
 import { RoleGuard } from './role.guard';
 
@@ -14,5 +15,7 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/login' },
+  { path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard] },
+  
 ];

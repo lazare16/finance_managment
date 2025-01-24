@@ -1,0 +1,8 @@
+<div>
+    <h1>Transactions</h1>
+    <ul>
+      <li *ngFor="let transaction of transactions">
+        {{ transaction.attributes.description }} - {{ transaction.attributes.amount }}
+      </li>
+    </ul>
+  </div>
