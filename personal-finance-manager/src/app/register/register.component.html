@@ -1,27 +1,12 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div>
-        <label for="email">Email:</label>
-        <input id="email" formControlName="email" type="email">
-        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-            Email is required and must be valid.
-        </div>
-    </div>
-
-    <div>
-        <label for="password">Password:</label>
-        <input id="password" formControlName="password" type="password">
-        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-            Password is required.
-        </div>
-    </div>
-
-    <div>
-        <label for="confirmPassword">Confirm Password:</label>
-        <input id="confirmPassword" formControlName="confirmPassword" type="password">
-        <div *ngIf="registerForm.get('confirmPassword')?.value !== registerForm.get('password')?.value">
-            Passwords must match.
-        </div>
-    </div>
-
-    <button type="submit" [disabled]="registerForm.invalid">Register</button>
-</form>
+<div class="register-container">
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" />
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" />
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+        <button type="submit">Register</button>
+    </form>
+</div>

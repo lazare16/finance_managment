@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.css'
+  styleUrls: ['./transactions.component.css'],
 })
-export class TransactionsComponent {
+export class TransactionsComponent implements OnInit {
   transactions: any[] = [];
 
   constructor(private dataService: DataService) {}

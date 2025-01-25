@@ -1,32 +1,60 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://api.escuelajs.co/api/v1'; // Updated API URL for Escuela API
+  private usersKey = 'registeredUsers';
   private tokenKey = 'authToken';
   private userRoleKey = 'userRole';
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  // Login method
-  login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, credentials).pipe(
-      tap((response: any) => {
-        if (response.access_token) {
-          this.setToken(response.access_token);
-          this.setUserRole(response.user?.role || 'user');
-        }
-      })
+  // Mock login method
+  login(credentials: { email: string; password: string }): boolean {
+    const users = this.getRegisteredUsers();
+    const user = users.find(
+      (u: any) =>
+        u.email === credentials.email && u.password === credentials.password
     );
+
+    if (user) {
+      this.setToken('mock-token'); // Simulate token generation
+      this.setUserRole(user.role || 'user'); // Default role is 'user'
+      return true;
+    }
+
+    return false;
   }
 
-  register(data: { email: string; password: string; name: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users`, data);
+  // Mock registration method
+  register(data: { email: string; password: string; name: string }): boolean {
+    const users = this.getRegisteredUsers();
+
+    // Check if the email already exists
+    if (users.some((u: any) => u.email === data.email)) {
+      return false; // Email already registered
+    }
+
+    // Add new user
+    users.push({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      role: 'user', // Default role
+    });
+
+    this.saveRegisteredUsers(users);
+    return true;
+  }
+
+  private saveRegisteredUsers(users: any[]): void {
+    localStorage.setItem(this.usersKey, JSON.stringify(users));
+  }
+
+  private getRegisteredUsers(): any[] {
+    const users = localStorage.getItem(this.usersKey);
+    return users ? JSON.parse(users) : [];
   }
 
   private setToken(token: string): void {
